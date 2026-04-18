@@ -1,3 +1,4 @@
+import { faker } from '@faker-js/faker';
 describe('Testes End To End do fluxo de cadastro e login', () => {
 
     /* 
@@ -23,6 +24,21 @@ describe('Testes End To End do fluxo de cadastro e login', () => {
 
 
     it('Deve fazer o cadastro e validar o login com o usuário cadastrado', () => {
-        // Criar todo o fluxo aqui dentro deste único "it"
+       cy.visit ('http://localhost:3000/register.html');
+        cy.get('#name').type('Usuario Teste')
+        cy.get('#email').type(faker.internet.email())
+        cy.get('#password').type('senha_segura123')
+        cy.get('#phone').type(faker.phone.number('##########'))
+        cy.get('#confirm-password').type('senha_segura123')
+       cy.get('#terms-agreement').check()
+        cy.get('#register-btn').click()
+        cy.url().should('include', '/dashboard.html')
+        cy.visit('http://localhost:3000/login.html')
+          
+  
+    cy.get('#email').type('Tanner69@yahoo.com')
+    cy.get('#password').type('senha_segura123')
+    cy.get('#login-btn').click()
+  cy.url().should('include', '/dashboard')
     });
 });
