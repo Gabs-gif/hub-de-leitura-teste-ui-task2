@@ -24,10 +24,23 @@
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 
-Cypress.Commands.add('login', (email, senha) => { 
-    cy.get('#email').type(email, {log: false})
-    cy.get('#password').type(senha, {log: false})
-    cy.get('#login-btn').click()
-    cy.url().should('include', 'dashboard')
- })
+Cypress.Commands.add('login', (email, password) => {
+  cy.visit('http://localhost:3000/login.html')
+
+  cy.get('#email').type(email)
+  cy.get('#password').type(password)
+  cy.get('#login-btn').click()
+})
+
+Cypress.Commands.add('register', (name, email, password, phone) => {
+  cy.visit('http://localhost:3000/register.html')
+
+  cy.get('#name').type(name)
+  cy.get('#email').type(email)
+  cy.get('#password').type(password)
+  cy.get('#phone').type(phone)
+  cy.get('#confirm-password').type(password)
+  cy.get('#terms-agreement').check()
+  cy.get('#register-btn').click()
+})
 
